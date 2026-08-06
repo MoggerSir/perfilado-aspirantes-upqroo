@@ -1,14 +1,19 @@
 import {
   ArrowRight,
   CheckCircle2,
+  ExternalLink,
   FileSearch,
   History,
+  ScanLine,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import { Link } from "@/lib/router-components";
 import { Button } from "@/components/ui/button";
 import { useEntranceAnimation } from "@/hooks/use-entrance-animation";
+
+const MOCKUP_URL = "https://idiomas.josmargalindo.com";
 
 function getTimeBasedGreeting(date = new Date()) {
   const hour = date.getHours();
@@ -80,45 +85,51 @@ export function WelcomePage() {
           </div>
           <div className="relative lg:pl-10" data-motion-item>
             <div className="absolute -right-20 -top-20 size-64 rounded-full bg-lavender/80" />
-            <div className="relative editorial-card rotate-[-1deg] bg-white p-5 sm:p-7">
-              <div className="flex items-center justify-between border-b border-ink/15 pb-5">
-                <div>
-                  <p className="eyebrow">Expediente activo</p>
-                  <p className="mt-2 text-xl font-extrabold">
-                    Ana Sofía Martínez
-                  </p>
-                </div>
-                <span className="rounded-full border border-sage/30 bg-sage-soft px-3 py-1 text-xs font-bold text-[#36543d]">
-                  En evaluación
-                </span>
-              </div>
-              <div className="grid gap-3 py-6 sm:grid-cols-2">
-                {[
-                  ["Formación académica", "Cumple"],
-                  ["Dominio de inglés", "Cumple"],
-                  ["Experiencia docente", "Por validar"],
-                  ["Disponibilidad", "Cumple"],
-                ].map(([label, state]) => (
-                  <div
-                    key={label}
-                    className="rounded-xl border border-ink/15 bg-paper p-4"
-                  >
-                    <p className="text-xs text-ink/55">{label}</p>
-                    <p className="mt-2 flex items-center gap-2 text-sm font-bold">
-                      <CheckCircle2 className="size-4 text-sage" />
-                      {state}
-                    </p>
-                  </div>
-                ))}
-              </div>
-              <div className="rounded-xl border border-slateblue/25 bg-[#e8eff3] p-4">
-                <p className="flex items-center gap-2 text-sm font-bold">
-                  <History className="size-4" />
-                  Trazabilidad encontrada
+            <div className="relative editorial-card rotate-[1deg] overflow-hidden bg-white p-6 sm:p-8">
+              <div className="absolute -right-10 -top-12 size-32 rounded-full border-[18px] border-sage-soft" />
+              <div className="relative">
+                <p className="eyebrow flex items-center gap-2">
+                  <ScanLine className="size-4" />
+                  Acceso para la exposición
                 </p>
-                <p className="mt-1 text-xs leading-relaxed text-ink/65">
-                  Trabajó previamente en la universidad durante Primavera 2025.
+                <h2 className="mt-3 max-w-md font-display text-3xl font-extrabold leading-tight tracking-[-.035em] sm:text-4xl">
+                  Lleva el mockup contigo.
+                </h2>
+                <p className="mt-3 max-w-md text-sm leading-6 text-ink/60">
+                  Escanea el código para recorrer la propuesta desde tu propio
+                  dispositivo.
                 </p>
+              </div>
+              <a
+                href={MOCKUP_URL}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Abrir el mockup de Nexo Idiomas"
+                className="relative mx-auto mt-7 grid w-fit place-items-center rounded-[1.75rem] border-2 border-ink bg-white p-4 shadow-[7px_7px_0_#d8e2da] transition-transform hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sage"
+              >
+                <QRCodeSVG
+                  value={MOCKUP_URL}
+                  size={248}
+                  level="H"
+                  marginSize={2}
+                  bgColor="#ffffff"
+                  fgColor="#273142"
+                  title="Código QR para abrir idiomas.josmargalindo.com"
+                  className="h-auto w-[min(62vw,248px)]"
+                />
+              </a>
+              <div className="relative mt-7 rounded-2xl border border-slateblue/25 bg-[#e8eff3] p-4 text-center">
+                <p className="text-xs font-bold uppercase tracking-[.14em] text-slateblue">
+                  idiomas.josmargalindo.com
+                </p>
+                <a
+                  href={MOCKUP_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-2 inline-flex min-h-9 items-center gap-2 rounded-lg px-3 text-sm font-bold text-ink hover:bg-white/70"
+                >
+                  Abrir enlace <ExternalLink className="size-4" />
+                </a>
               </div>
             </div>
           </div>
