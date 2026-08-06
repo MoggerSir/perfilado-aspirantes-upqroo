@@ -1,0 +1,405 @@
+/* Motion tokens */
+:root {
+  --motion-fast: 140ms;
+  --motion-normal: 260ms;
+  --motion-slow: 480ms;
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --motion-distance: 16px;
+  --motion-pressed-scale: 0.98;
+}
+
+/* Entrance animations */
+.motion-page {
+  min-width: 0;
+}
+
+.motion-content-reveal {
+  animation: content-reveal var(--motion-slow) var(--ease-standard) both;
+}
+
+.motion-state-icon {
+  animation: state-icon-in var(--motion-slow) var(--ease-standard) both;
+}
+
+@keyframes content-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes state-icon-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Hover interactions */
+:is(button, a, [role="button"]) {
+  transition:
+    color var(--motion-fast) var(--ease-soft),
+    background-color var(--motion-fast) var(--ease-soft),
+    border-color var(--motion-fast) var(--ease-soft),
+    opacity var(--motion-fast) var(--ease-soft),
+    transform var(--motion-fast) var(--ease-soft),
+    box-shadow var(--motion-normal) var(--ease-soft);
+}
+
+.motion-card-interactive {
+  transition:
+    transform var(--motion-normal) var(--ease-standard),
+    border-color var(--motion-normal) var(--ease-soft),
+    box-shadow var(--motion-normal) var(--ease-soft),
+    background-color var(--motion-normal) var(--ease-soft);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .motion-card-interactive:hover {
+    transform: translateY(-3px);
+    border-color: rgb(83 107 88 / 0.56);
+    box-shadow: 7px 8px 0 0 rgb(34 38 34 / 0.11);
+  }
+
+  .motion-icon-shift:hover svg,
+  .motion-card-interactive:hover .motion-icon-shift {
+    transform: translateX(2px);
+  }
+}
+
+.motion-icon-shift,
+.motion-card-interactive .motion-icon-shift {
+  transition: transform var(--motion-normal) var(--ease-standard);
+}
+
+tbody tr {
+  transition: background-color var(--motion-fast) var(--ease-soft);
+}
+
+/* Focus states */
+:is(button, a, input, select, textarea):focus-visible {
+  transition:
+    box-shadow var(--motion-fast) var(--ease-soft),
+    border-color var(--motion-fast) var(--ease-soft),
+    background-color var(--motion-fast) var(--ease-soft);
+}
+
+/* Pressed states */
+:is(button, a, [role="button"]):not(:disabled):active {
+  transform: translateY(1px) scale(var(--motion-pressed-scale));
+  transition-duration: 80ms;
+}
+
+/* Loading states */
+.motion-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgb(34 38 34 / 0.08);
+}
+
+.motion-skeleton::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.72),
+    transparent
+  );
+  animation: skeleton-shimmer 1.35s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Modal and overlay animations */
+.motion-overlay[data-state="open"] {
+  animation: overlay-in var(--motion-normal) var(--ease-soft) both;
+}
+
+.motion-overlay[data-state="closed"] {
+  animation: overlay-out var(--motion-fast) var(--ease-exit) both;
+}
+
+.motion-dialog[data-state="open"] {
+  animation: dialog-in var(--motion-slow) var(--ease-standard) both;
+}
+
+.motion-dialog[data-state="closed"] {
+  animation: dialog-out var(--motion-fast) var(--ease-exit) both;
+}
+
+.motion-drawer[data-state="open"] {
+  animation: drawer-in var(--motion-slow) var(--ease-standard) both;
+}
+
+.motion-drawer[data-state="closed"] {
+  animation: drawer-out var(--motion-normal) var(--ease-exit) both;
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 12px)) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes dialog-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 6px)) scale(0.99);
+  }
+}
+
+@keyframes drawer-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes drawer-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* Navigation transitions */
+::view-transition-old(root) {
+  animation: route-out var(--motion-fast) var(--ease-exit) both;
+}
+
+::view-transition-new(root) {
+  animation: route-in var(--motion-normal) var(--ease-standard) both;
+}
+
+@keyframes route-out {
+  to {
+    opacity: 0.82;
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes route-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.motion-nav-indicator {
+  transition:
+    transform var(--motion-normal) var(--ease-standard),
+    background-color var(--motion-normal) var(--ease-soft),
+    color var(--motion-normal) var(--ease-soft);
+}
+
+/* Form feedback */
+.motion-field-message {
+  animation: field-message-in var(--motion-normal) var(--ease-standard) both;
+}
+
+@keyframes field-message-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Import simulation */
+.import-processing-surface {
+  animation: import-surface-in 360ms var(--ease-standard) both;
+}
+
+.import-stage-enter {
+  animation: import-stage-in 520ms var(--ease-standard) both;
+}
+
+.import-orbit-ring {
+  animation: import-orbit 7s linear infinite;
+}
+
+.import-orbit-ring-reverse {
+  animation-direction: reverse;
+  animation-duration: 5.5s;
+}
+
+.import-core-pulse {
+  animation: import-core-pulse 1.8s ease-in-out infinite;
+}
+
+.import-scan-line {
+  animation: import-scan 2.4s var(--ease-soft) infinite;
+  box-shadow: 0 0 20px rgb(184 201 186 / 0.65);
+}
+
+.import-live-dot {
+  animation: import-live 1.4s ease-in-out infinite;
+}
+
+.import-progress {
+  transition: transform 720ms var(--ease-standard);
+}
+
+.import-drop-orbit {
+  transition:
+    transform 600ms var(--ease-standard),
+    border-color 260ms var(--ease-soft);
+}
+
+.import-drop-zone:hover .import-drop-orbit,
+.import-drop-zone:focus-visible .import-drop-orbit {
+  transform: scale(1.08) rotate(8deg);
+  border-color: rgb(83 107 88 / 0.32);
+}
+
+.import-drop-zone:hover .import-drop-orbit-delayed,
+.import-drop-zone:focus-visible .import-drop-orbit-delayed {
+  transform: scale(0.94) rotate(-12deg);
+}
+
+@keyframes import-surface-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes import-stage-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes import-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes import-core-pulse {
+  0%,
+  100% {
+    transform: scale(0.92);
+    opacity: 0.48;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.78;
+  }
+}
+
+@keyframes import-scan {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(420px);
+    opacity: 0;
+  }
+}
+
+@keyframes import-live {
+  0%,
+  100% {
+    transform: scale(0.85);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 639px) {
+  :root {
+    --motion-distance: 10px;
+  }
+
+  .motion-card-interactive:hover {
+    transform: none;
+  }
+}

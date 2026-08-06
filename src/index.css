@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color: #222622;
+    background: #f7f5ef;
+    font-synthesis: none;
+  }
+  * {
+    @apply border-ink/20;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply m-0 min-w-[320px] bg-paper font-sans text-ink antialiased;
+  }
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-paper;
+  }
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-[-0.035em];
+  }
+  ::selection {
+    @apply bg-sage text-white;
+  }
+}
+
+@layer components {
+  .surface {
+    @apply border border-ink/20 bg-white;
+  }
+  .editorial-card {
+    @apply surface rounded-[1.4rem] shadow-editorial;
+  }
+  .eyebrow {
+    @apply text-[.68rem] font-bold uppercase tracking-[.19em] text-sage;
+  }
+  .page-title {
+    @apply text-3xl font-extrabold leading-tight sm:text-4xl;
+  }
+  .field-label {
+    @apply mb-2 block text-sm font-semibold;
+  }
+  .field-help {
+    @apply mt-1.5 text-xs leading-relaxed text-ink/60;
+  }
+  .input-base {
+    @apply min-h-11 w-full rounded-xl border border-ink/25 bg-white px-3.5 text-sm transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-ink/40 hover:border-ink/40 focus:border-sage;
+  }
+}
+
+@layer utilities {
+  .text-ink\/40,
+  .text-ink\/45,
+  .text-ink\/50,
+  .text-ink\/55,
+  .text-ink\/60,
+  .text-ink\/65 {
+    color: rgb(34 38 34 / 0.74);
+  }
+  .text-white\/40,
+  .text-white\/55,
+  .text-white\/60,
+  .text-white\/65,
+  .text-white\/70,
+  .text-white\/75 {
+    color: rgb(255 255 255 / 0.9);
+  }
+}
